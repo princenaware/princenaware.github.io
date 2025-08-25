@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portfolio</title>
+  <script>
+    // EDIT YOUR INFORMATION HERE
+    const CONFIG = {
+      name: "Prince Naware",
+      role: "Computer Science Student | Web Developer",
+      about: "Hello! I'm a student passionate about web development. I love learning new technologies and building creative projects.",
+      education: [
+        {
+          degree: "Bachelor of Technology",
+          major: "Computer Science & Engineering",
+          period: "2021 - Present"
+        },
+        {
+          degree: "Higher Secondary Education",
+          major: "Science Stream",
+          period: "2019 - 2021"
+        }
+      ],
+      skills: {
+        webDev: {
+          level: 85,
+          items: ["HTML5 & CSS3", "JavaScript", "Responsive Design"]
+        },
+        programming: {
+          level: 75,
+          items: ["Python", "Java", "C++"]
+        }
+      },
+      achievements: [
+        {
+          title: "Hackathon Winner",
+          description: "First place in college coding competition"
+        },
+        {
+          title: "Dean's List",
+          description: "Maintained 9+ CGPA"
+        }
+      ],
+      contact: {
+        email: "your.email@example.com",
+        linkedin: "linkedin.com/in/yourprofile",
+        github: "github.com/yourusername"
+      },
+      // Add your profile photo path
+      profilePhoto: "./images/profile.jpg",
+      theme: {
+        dark: {
+          primary: '#2c3e50',
+          secondary: '#34495e',
+          accent: '#9b59b6',
+          background: '#1a1a1a',
+          text: '#ffffff',
+          cardBg: '#2d2d2d'
+        },
+        light: {
+          primary: '#4834d4',
+          secondary: '#686de0',
+          accent: '#be2edd',
+          background: '#f9f9f9',
+          text: '#2d3436',
+          cardBg: '#ffffff'
+        }
+      }
+    };
+
+    // Function to populate content when page loads
+    window.onload = function() {
+      // Update name everywhere
+      document.querySelectorAll('.user-name').forEach(el => el.textContent = CONFIG.name);
+      
+      // Update role
+      document.querySelector('.user-role').textContent = CONFIG.role;
+      
+      // Update about
+      document.querySelector('.user-about').textContent = CONFIG.about;
+      
+      // Update education
+      const eduContainer = document.querySelector('.education-timeline');
+      eduContainer.innerHTML = CONFIG.education.map(edu => `
+        <div class="timeline-item">
+          <h3>${edu.degree}</h3>
+          <p>${edu.major}</p>
+          <p>${edu.period}</p>
+        </div>
+      `).join('');
+
+      // Update skills
+      updateSkills();
+      
+      // Update contact
+      document.querySelector('.email-link').href = `mailto:${CONFIG.contact.email}`;
+      document.querySelector('.email-link').textContent = CONFIG.contact.email;
+      document.querySelector('.linkedin-link').href = `https://${CONFIG.contact.linkedin}`;
+      
+      // Update profile photo
+      document.querySelector('.profile-photo').src = CONFIG.profilePhoto;
+      
+      // Apply saved theme preference
+      if (localStorage.getItem('dark-theme') === 'true') {
+        document.body.classList.add('dark-theme');
+      }
+    };
+
+    function updateSkills() {
+      document.querySelector('.web-progress').style.width = CONFIG.skills.webDev.level + '%';
+      document.querySelector('.prog-progress').style.width = CONFIG.skills.programming.level + '%';
+      
+      document.querySelector('.web-skills').innerHTML = CONFIG.skills.webDev.items
+        .map(skill => `<li>${skill}</li>`).join('');
+      document.querySelector('.prog-skills').innerHTML = CONFIG.skills.programming.items
+        .map(skill => `<li>${skill}</li>`).join('');
+    }
+
+    // Add theme toggle function
+    function toggleTheme() {
+      document.body.classList.toggle('dark-theme');
+      const isDark = document.body.classList.contains('dark-theme');
+      localStorage.setItem('dark-theme', isDark);
+    }
+  </script>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #4f46e5;
+      --accent: #8b5cf6;
+      --background: #f8fafc;
+      --text: #0f172a;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --glass: rgba(255, 255, 255, 0.1);
+      --border: rgba(255, 255, 255, 0.2);
+      
+      --dark-primary: #3b82f6;
+      --dark-secondary: #6366f1;
+      --dark-accent: #a855f7;
+      --dark-background: #0f172a;
+      --dark-text: #f8fafc;
+      --dark-card-bg: rgba(30, 41, 59, 0.9);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .glass-effect {
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+    }
+
+    header {
+      background: rgba(37, 99, 235, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      padding: 5px 0;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .profile-section {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 6rem 2rem;
+    }
+
+    .profile-photo {
+      width: 250px;
+      height: 250px;
+      border: 4px solid var(--border);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .skill-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 5px;
+      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .education-timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 40px auto;
+    }
+
+    .timeline-item {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+      margin-left: 20px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      width: 20px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.02);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .theme-toggle {
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* Dark theme overrides */
+    .dark-theme {
+      background: var(--dark-background);
+      color: var(--dark-text);
+    }
+
+    .dark-theme .glass-effect,
+    .dark-theme .card,
+    .dark-theme .skill-card,
+    .dark-theme .timeline-item {
+      background: var(--dark-card-bg);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Add smooth transitions */
+    * {
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+  </style>
+
+  <!-- Add Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <button onclick="toggleTheme()" class="theme-toggle">
+    Toggle Theme
+  </button>
+  
+  <header>
+    <h1 class="user-name"></h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="profile-section">
+    <img class="profile-photo" alt="Profile Photo">
+    <h1 class="user-name"></h1>
+    <p class="user-role"></p>
+  </section>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p class="user-about"></p>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <div class="education-timeline">
+      <!-- Populated by JavaScript -->
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Technical Skills</h2>
+    <div class="skills">
+      <div class="skill-card">
+        <h3>Web Development</h3>
+        <div class="progress-bar">
+          <div class="progress web-progress"></div>
+        </div>
+        <ul class="web-skills"></ul>
+      </div>
+      <div class="skill-card">
+        <h3>Programming</h3>
+        <div class="progress-bar">
+          <div class="progress prog-progress"></div>
+        </div>
+        <ul class="prog-skills"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="achievements">
+    <h2>Academic Achievements</h2>
+    <div class="projects">
+      <div class="skill-card">
+        <h3>Hackathon Winner</h3>
+        <p>First place in college coding competition</p>
+      </div>
+      <div class="skill-card">
+        <h3>Dean's List</h3>
+        <p>Maintained 9+ CGPA</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects">
+      <div class="card">
+        <img src="https://via.placeholder.com/300x150" alt="Project 1">
+        <h3>Portfolio Website</h3>
+        <p>A responsive personal website built with HTML & CSS.</p>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/300x150" alt="Project 2">
+        <h3>Todo App</h3>
+        <p>A simple todo list app to manage tasks efficiently.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a class="email-link"></a></p>
+    <p>LinkedIn: <a class="linkedin-link"></a></p>
+  </section>
+
+  <footer>
+    <p>© 2024 <span class="user-name"></span></p>
+  </footer>
+
+</body>
+</html>
